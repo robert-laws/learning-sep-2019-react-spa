@@ -29,13 +29,13 @@ export default class App extends Component {
 
   render() {
     return (
-      <Container className='App'>
-        <Row>
-          <Col>
+      <Container className='App text-center'>
+        <Row className='justify-content-center'>
+          <Col sm='8'>
             <h1>React SPA</h1>
             <p>{this.state.selection}</p>
           </Col>
-          <Col>
+          <Col sm='4'>
             <Button color="primary" size="lg">Click Here</Button>
             <hr />
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
