@@ -3,10 +3,12 @@ import { Container, Row, Col, Button } from 'reactstrap';
 
 import './home.styles.scss';
 
-class Home extends Component {
+class Home extends Component {  
   render() {
+    const { user } = this.props;
+
     return (
-      <Container className='App text-center'>
+      <Container className='App text-center' fluid>
         <Row className='justify-content-center'>
           <Col sm='4'>
             <h1 className='text-primary'>Meeting Log</h1>
@@ -14,9 +16,14 @@ class Home extends Component {
           </Col>
         </Row>
         <Row className='justify-content-center'>
-          <Button color="primary" outline size="md">Register</Button>
-          <Button color="primary" outline size="md">Log In</Button>
-          <Button color="primary" size="md">Meetings</Button>
+          {!user ? (
+            <span>
+              <Button color="primary" outline size="md">Register</Button>
+              <Button color="primary" outline size="md">Log In</Button>
+            </span>
+          ) : (
+            <Button color="primary" size="md">Meetings</Button>
+          )}
         </Row>
       </Container>
     )
