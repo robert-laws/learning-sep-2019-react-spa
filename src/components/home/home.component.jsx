@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col } from 'reactstrap';
 
 import './home.styles.scss';
 
@@ -18,11 +19,11 @@ class Home extends Component {
         <Row className='justify-content-center'>
           {!user ? (
             <span>
-              <Button color="primary" outline size="md">Register</Button>
-              <Button color="primary" outline size="md">Log In</Button>
+              <Link className='btn btn-outline-primary mr-2' to='/registration'>Register</Link>
+              <Link className='btn btn-outline-primary mr-2' to='/log-in'>Log In</Link>
             </span>
           ) : (
-            <Button color="primary" size="md">Meetings</Button>
+            <Link className='btn btn-primary' to='/meetings'>Meetings</Link>
           )}
         </Row>
       </Container>

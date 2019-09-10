@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from 'reactstrap';
 import { FaUsers } from 'react-icons/fa';
 
 import './navigation.styles.scss';
@@ -25,28 +26,28 @@ class Navigation extends Component {
     return (
       <div>
         <Navbar color='dark' dark expand='md'>
-          <NavbarBrand href='/'>
+          <Link to='/' className='navbar-brand'>
             <FaUsers className='mr-1' /> Meeting App
-          </NavbarBrand>
+          </Link>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className='ml-auto' navbar>
               {user ? (
                 <React.Fragment>
                   <NavItem>
-                    <NavLink href='/'>Meetings</NavLink>
+                    <Link to='/meetings' className='nav-link'>Meetings</Link>
                   </NavItem>
                   <NavItem>
-                    <NavLink href='/'>Log Out</NavLink>
+                    <Link to='/' className='nav-link'>Log Out</Link>
                   </NavItem>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
                   <NavItem>
-                    <NavLink href='/'>Register</NavLink>
+                    <Link to='/registration' className='nav-link'>Register</Link>
                   </NavItem>
                   <NavItem>
-                    <NavLink href='/'>Log In</NavLink>
+                    <Link to='/log-in' className='nav-link'>Log In</Link>
                   </NavItem>
                 </React.Fragment>
               )}              
