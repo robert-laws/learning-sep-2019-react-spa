@@ -5,11 +5,11 @@ import './welcome.styles.scss';
 
 class Welcome extends Component {
   render() {
-    const { user } = this.props;
+    const { userName } = this.props;
 
     return (
       <div id='welcome-component' className='text-center text-secondary font-weight-bold pl-1'>
-        Welcome, { user } | <Link to="/">Log Out</Link>
+        Welcome, { userName } | <Link to="/">Log Out</Link>
       </div>
     )
   }

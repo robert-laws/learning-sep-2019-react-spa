@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
+
+import firebase from './firebase/firebase';
+
 import Welcome from './components/welcome/welcome.component';
 import Navigation from './components/navigation/navigation.component';
 import Home from './components/home/home.component';
@@ -10,12 +13,40 @@ import Meetings from './components/meetings/meetings.component';
 import './App.scss';
 
 export default class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      user: 'Kal'
+      user: null,
+      displayName: null,
+      userID: null
     }
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(FBUser => {
+      if(FBUser) {
+        this.setState({
+          user: FBUser,
+          displayName: FBUser.displayName,
+          userID: FBUser.uid
+        })
+      }
+    })
+  }
+
+  registerUser = userName => {
+    firebase.auth().onAuthStateChanged(FBUser => {
+      FBUser.updateProfile({
+        displayName: userName
+      }).then(() => {
+        this.setState({
+          user: FBUser,
+          displayName: FBUser.displayName,
+          userID: FBUser.uid
+        })
+      })
+    })
   }
 
   render() {
@@ -23,12 +54,12 @@ export default class App extends Component {
       <div>
         <Navigation user={this.state.user} />
         {this.state.user && (
-          <Welcome user={this.state.user} />
+          <Welcome userName={this.state.displayName} />
         )}
         <Switch>
           <Route exact path='/' render={() => <Home user={this.state.user} />} />
           <Route path='/log-in' component={LogIn} />
-          <Route path='/registration' component={Registration} />
+          <Route path='/registration' render={() => <Registration registerUser={this.registerUser} />} />
           <Route path='/meetings' component={Meetings} />
         </Switch>
       </div>
