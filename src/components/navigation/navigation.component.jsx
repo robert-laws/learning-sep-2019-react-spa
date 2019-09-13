@@ -21,7 +21,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, logoutUser } = this.props;
     
     return (
       <div>
@@ -38,7 +38,7 @@ class Navigation extends Component {
                     <Link to='/meetings' className='nav-link'>Meetings</Link>
                   </NavItem>
                   <NavItem>
-                    <Link to='/' className='nav-link'>Log Out</Link>
+                    <Link to='/' className='nav-link' onClick={event => logoutUser(event)}>Log Out</Link>
                   </NavItem>
                 </React.Fragment>
               ) : (

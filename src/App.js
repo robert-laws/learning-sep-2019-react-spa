@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 
 import firebase from './firebase/firebase';
 
@@ -12,7 +12,7 @@ import Meetings from './components/meetings/meetings.component';
 
 import './App.scss';
 
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -45,16 +45,31 @@ export default class App extends Component {
           displayName: FBUser.displayName,
           userID: FBUser.uid
         })
+        this.props.history.push('/meetings')
       })
+    })
+  }
+
+  logoutUser = event => {
+    event.preventDefault();
+
+    this.setState({
+      user: null,
+      displayName: null,
+      userID: null
+    })
+
+    firebase.auth().signOut().then(() => {
+      this.props.history.push('/log-in')
     })
   }
 
   render() {
     return (
       <div>
-        <Navigation user={this.state.user} />
+        <Navigation user={this.state.user} logoutUser={this.logoutUser} />
         {this.state.user && (
-          <Welcome userName={this.state.displayName} />
+          <Welcome userName={this.state.displayName} logoutUser={this.logoutUser} />
         )}
         <Switch>
           <Route exact path='/' render={() => <Home user={this.state.user} />} />
@@ -66,3 +81,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default withRouter(App);
