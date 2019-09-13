@@ -54,7 +54,6 @@ class LogIn extends Component {
     })
   }
 
-
   render() {
     return (
       <Container className='App text-left' fluid>
