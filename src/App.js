@@ -64,6 +64,19 @@ class App extends Component {
     })
   }
 
+  addMeeting = meetingName => {
+    const ref = firebase.database().ref(`meetings/${this.state.user.uid}`);
+    let meetingError = null;
+
+    try {
+      ref.push({meetingName: meetingName})
+    } catch (error) {
+      meetingError = error.message
+    }
+
+    return meetingError;
+  }
+
   render() {
     return (
       <div>
@@ -75,7 +88,7 @@ class App extends Component {
           <Route exact path='/' render={() => <Home user={this.state.user} />} />
           <Route path='/log-in' component={LogIn} />
           <Route path='/registration' render={() => <Registration registerUser={this.registerUser} />} />
-          <Route path='/meetings' component={Meetings} />
+          <Route path='/meetings' render={() => <Meetings addMeeting={this.addMeeting} />} />
         </Switch>
       </div>
     );
