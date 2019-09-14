@@ -19,7 +19,9 @@ class App extends Component {
     this.state = {
       user: null,
       displayName: null,
-      userID: null
+      userID: null,
+      meetings: null,
+      howManyMeetings: null
     }
   }
 
@@ -31,6 +33,26 @@ class App extends Component {
           displayName: FBUser.displayName,
           userID: FBUser.uid
         })
+
+        const meetingsRef = firebase.database().ref(`meetings/${FBUser.uid}`);
+
+        meetingsRef.on('value', snapshot => {
+          let meetingsList = [];
+
+          snapshot.forEach(item => {            
+            meetingsList.push({
+              meetingID: item.key,
+              meetingName: item.val().meetingName
+            })
+          })
+
+          this.setState({
+            meetings: meetingsList,
+            howManyMeetings: meetingsList.length
+          })
+        })
+      } else {
+        this.setState({user: null})
       }
     })
   }
@@ -88,7 +110,7 @@ class App extends Component {
           <Route exact path='/' render={() => <Home user={this.state.user} />} />
           <Route path='/log-in' component={LogIn} />
           <Route path='/registration' render={() => <Registration registerUser={this.registerUser} />} />
-          <Route path='/meetings' render={() => <Meetings addMeeting={this.addMeeting} />} />
+          <Route path='/meetings' render={() => <Meetings addMeeting={this.addMeeting} meetings={this.state.meetings} />} />
         </Switch>
       </div>
     );

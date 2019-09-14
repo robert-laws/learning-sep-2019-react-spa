@@ -4,14 +4,15 @@ import { Card, CardBody, CardTitle } from 'reactstrap';
 import { Button, Form } from 'reactstrap';
 import { InputGroup, InputGroupAddon, Input } from 'reactstrap';
 
+import MeetingsList from '../meetings-list/meetings-list.component';
 import FormError from '../form-error/form-error.component';
 import Alert from '../myAlert/myAlert.component';
 
 import './meetings.styles.scss';
 
 class Meetings extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       meetingName: '',
@@ -68,6 +69,22 @@ class Meetings extends Component {
                     </InputGroupAddon>
                   </InputGroup>
                 </Form>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row className='justify-content-center'>
+          <Col sm='4' className='mt-3'>
+            <Card>
+              <CardBody>
+                {this.props.meetings && this.props.meetings.length ? (
+                  <CardTitle>
+                    <h3 className='text-primary'>
+                      Your Meetings
+                    </h3>
+                    <MeetingsList meetings={this.props.meetings} />
+                  </CardTitle>
+                ) : null}                             
               </CardBody>
             </Card>
           </Col>
