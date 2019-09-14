@@ -3,7 +3,9 @@ import { Container, Row, Col } from 'reactstrap';
 import { Card, CardBody, CardTitle } from 'reactstrap';
 import { Button, Form } from 'reactstrap';
 import { InputGroup, InputGroupAddon, Input } from 'reactstrap';
+
 import FormError from '../form-error/form-error.component';
+import Alert from '../myAlert/myAlert.component';
 
 import './meetings.styles.scss';
 
@@ -13,7 +15,8 @@ class Meetings extends Component {
 
     this.state = {
       meetingName: '',
-      errorMessage: null
+      errorMessage: null,
+      alertMessage: null
     }
   }
 
@@ -33,11 +36,12 @@ class Meetings extends Component {
 
     if(error !== null) {
       this.setState({errorMessage: error})
+      this.setState({alertMessage: null})
     } else {
       this.setState({meetingName: ''})
       this.setState({errorMessage: null})
+      this.setState({alertMessage: `Meeting named '${this.state.meetingName}' has been added to the database.`})
     }
-    
   }
 
   render() {
@@ -52,6 +56,9 @@ class Meetings extends Component {
                 </CardTitle>                
                 {this.state.errorMessage !== null ? (
                   <FormError message={this.state.errorMessage} />
+                ) : null}
+                {this.state.alertMessage !== null ? (
+                  <Alert message={this.state.alertMessage} />
                 ) : null}
                 <Form onSubmit={this.handleSubmit}>
                   <InputGroup>
