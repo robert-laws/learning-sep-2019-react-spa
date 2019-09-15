@@ -9,8 +9,10 @@ import Home from './components/home/home.component';
 import LogIn from './components/log-in/log-in.component';
 import Registration from './components/registration/registration.component';
 import Meetings from './components/meetings/meetings.component';
+import CheckIn from './components/checkin/checkin.component';
 
 import './App.scss';
+import Attendees from './components/attendees/attendees.component';
 
 class App extends Component {
   constructor(props) {
@@ -110,7 +112,9 @@ class App extends Component {
           <Route exact path='/' render={() => <Home user={this.state.user} />} />
           <Route path='/log-in' component={LogIn} />
           <Route path='/registration' render={() => <Registration registerUser={this.registerUser} />} />
-          <Route path='/meetings' render={() => <Meetings addMeeting={this.addMeeting} meetings={this.state.meetings} />} />
+          <Route path='/meetings' render={() => <Meetings addMeeting={this.addMeeting} meetings={this.state.meetings} userID={this.state.userID} />} />
+          <Route path='/checkin/:userID/:meetingID' render={() => <CheckIn />} />
+          <Route path='/attendees/:userID/:meetingID' render={() => <Attendees adminUser={this.state.userID} />} />
         </Switch>
       </div>
     );

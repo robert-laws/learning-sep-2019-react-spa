@@ -49,7 +49,7 @@ class Meetings extends Component {
     return (
       <Container className='App meeting-section text-center' fluid>
         <Row className='justify-content-center'>
-          <Col sm='4'>
+          <Col sm='6'>
             <Card>
               <CardBody>
                 <CardTitle>
@@ -74,17 +74,17 @@ class Meetings extends Component {
           </Col>
         </Row>
         <Row className='justify-content-center'>
-          <Col sm='4' className='mt-3'>
-            <Card>
+          <Col sm='8' className='mt-3'>
+            <Card body className="text-left">
               <CardBody>
                 {this.props.meetings && this.props.meetings.length ? (
-                  <CardTitle>
+                  <CardTitle className="mt-n4">
                     <h3 className='text-primary'>
                       Your Meetings
                     </h3>
-                    <MeetingsList meetings={this.props.meetings} />
+                    <MeetingsList meetings={this.props.meetings} userID={this.props.userID} />
                   </CardTitle>
-                ) : null}                             
+                ) : <CardTitle className="mt-n4"><h3 className='text-secondary'>No Meetings for this User</h3></CardTitle>}                             
               </CardBody>
             </Card>
           </Col>
