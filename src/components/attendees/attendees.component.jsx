@@ -12,13 +12,20 @@ class Attendees extends Component {
     super(props);
 
     this.state = {
+      thisMeetingName: '',
       displayAttendees: []
     }
   }
 
   componentDidMount() {
-    const ref = firebase.database().ref(`meetings/${this.props.match.params.userID}/${this.props.match.params.meetingID}/attendees`);
+    const meetingRef = firebase.database().ref(`meetings/${this.props.match.params.userID}/${this.props.match.params.meetingID}/meetingName`);
+    meetingRef.once('value', snapshot => {
+      this.setState({
+        thisMeetingName: snapshot.val()
+      });
+    });
 
+    const ref = firebase.database().ref(`meetings/${this.props.match.params.userID}/${this.props.match.params.meetingID}/attendees`);
     ref.on('value', snapshot => {
       let attendeesList = [];
 
@@ -41,14 +48,21 @@ class Attendees extends Component {
       <Container className='App text-center' fluid>
         <Row className='justify-content-center'>
           <Col sm='4'>
-            <h1 className='text-primary'>
-              Attendees
+            <h1 className='text-primary mb-3'>
+              {this.state.thisMeetingName}
             </h1>
           </Col>
         </Row>
         <Row className='justify-content-center'>
           <Col sm='4'>
-            <AttendeesList userID={this.props.match.params.userID} attendees={this.state.displayAttendees} />
+            <h3>
+              Attendees
+            </h3>
+          </Col>
+        </Row>
+        <Row className='justify-content-center'>
+          <Col sm='4'>
+            <AttendeesList userID={this.props.match.params.userID} meetingID={this.props.match.params.meetingID} attendees={this.state.displayAttendees} adminUser={this.props.adminUser} />
           </Col>
         </Row>
       </Container>
