@@ -34,7 +34,8 @@ class CheckIn extends Component {
 
     ref.push({
       attendeeName: this.state.displayName,
-      attendeeEmail: this.state.email
+      attendeeEmail: this.state.email,
+      star: false
     })
 
     this.props.history.push(`/attendees/${this.props.match.params.userID}/${this.props.match.params.meetingID}`);

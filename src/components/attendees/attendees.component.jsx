@@ -33,7 +33,8 @@ class Attendees extends Component {
         attendeesList.push({
           attendeeID: item.key,
           attendeeName: item.val().attendeeName,
-          attendeeEmail: item.val().attendeeEmail
+          attendeeEmail: item.val().attendeeEmail,
+          star: item.val().star
         })
       })
 
@@ -45,7 +46,7 @@ class Attendees extends Component {
 
   render() {
     return (
-      <Container className='App text-center' fluid>
+      <Container className='App attendees-section text-center' fluid>
         <Row className='justify-content-center'>
           <Col sm='4'>
             <h1 className='text-primary mb-3'>
